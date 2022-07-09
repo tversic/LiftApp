@@ -14,10 +14,12 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 
     private final JwtService jwtService;
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder encoder;
 
     public AuthenticationServiceImpl(JwtService jwtService, UserRepository userRepository) {
         this.jwtService = jwtService;
         this.userRepository = userRepository;
+        encoder = new BCryptPasswordEncoder();
     }
 
     @Override
@@ -33,8 +35,20 @@ public class AuthenticationServiceImpl implements AuthenticationService{
         );
     }
 
+    @Override
+    public Optional<User> register(User user){
+        user.setPassword(
+                encryptPassword(user.getPassword())
+        );
+        userRepository.save(user);
+        return Optional.of(user);
+    }
+
     private boolean isMatchingPassword(String rawPassword, String encryptedPassword) {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         return encoder.matches(rawPassword, encryptedPassword);
+    }
+
+    private String encryptPassword(String rawPassword){
+        return encoder.encode(rawPassword);
     }
 }

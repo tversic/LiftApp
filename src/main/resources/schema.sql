@@ -1,5 +1,5 @@
 create table if not exists app_user (
-    id identity,
+    id long auto_increment(3) not null primary key,
     username varchar(100) not null unique,
     password varchar(1000) not null);
 
