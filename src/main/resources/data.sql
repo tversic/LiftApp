@@ -10,3 +10,6 @@ insert into authority(id, authority_name) values
 insert into user_authority(user_id, authority_id) values
     (1, 1),
     (2, 3);
+
+insert into LU_JOB (id, title, description, location, issuer_id, driver_id)
+values (1, 'prviJob', 'desc', 'Put Nina 19', 1, 2);

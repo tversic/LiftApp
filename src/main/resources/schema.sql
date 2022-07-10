@@ -11,3 +11,13 @@ create table if not exists user_authority(
     constraint fk_user foreign key (user_id) references app_user(id),
     constraint fk_authority foreign key (authority_id) references authority(id)
 );
+create table if not exists LU_JOB(
+    id long auto_increment not null primary key,
+    title varchar(255),
+    description varchar(3000),
+    location varchar(255),
+    issuer_id int,
+    driver_id int,
+    constraint fk_issuer foreign key (issuer_id) references app_user(id),
+    constraint fk_driver foreign key (driver_id) references app_user(id)
+);

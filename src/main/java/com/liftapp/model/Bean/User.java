@@ -33,4 +33,5 @@ public class User {
             inverseJoinColumns = {@JoinColumn(name = "authority_id", referencedColumnName = "id")}
     )
     private Set<Authority> authorities = new HashSet<>();
+
 }
