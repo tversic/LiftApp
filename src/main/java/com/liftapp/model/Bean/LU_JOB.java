@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 @Data
 @Entity
@@ -24,6 +25,12 @@ public class LU_JOB {
 
     @Column(name = "location")
     String location;
+
+    @Column(name = "issued_date")
+    Date issuedDate;
+
+    @Column(name = "price")
+    Double price;
 
     @OneToOne
     @JoinColumn(name = "driver_id", referencedColumnName = "id")
