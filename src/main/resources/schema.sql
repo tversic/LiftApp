@@ -19,7 +19,8 @@ create table if not exists LU_JOB(
     issuer_id int,
     driver_id int,
     issued_date date,
-    price int,
+    price double,
+    distance double,
     constraint fk_issuer foreign key (issuer_id) references app_user(id),
     constraint fk_driver foreign key (driver_id) references app_user(id)
 );

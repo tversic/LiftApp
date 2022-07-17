@@ -22,17 +22,44 @@ public class JobController {
 
     @GetMapping("getAll")
     public ResponseEntity<List<LU_JOB>> getAllJobs(){
-        return ResponseEntity.ok(jobService.getAllJobs());
+        try {
+            return ResponseEntity.ok(jobService.getAllJobs());
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @GetMapping("getFree")
     public ResponseEntity<List<LU_JOB>> getFreeJobs(){
-        return ResponseEntity.ok().body(jobService.getAllFreeJobs());
+        try{
+            return ResponseEntity.ok().body(jobService.getAllFreeJobs());
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @GetMapping("getMyAssigned/{driver_username}")
+    public ResponseEntity<List<LU_JOB>> getMyAssigned(@PathVariable String driver_username){
+        try{
+            return ResponseEntity.ok().body(jobService.getMyAssigned(driver_username));
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @PostMapping("/{id}/{username}")
     public ResponseEntity scheduleJob(@PathVariable Integer id, @PathVariable String username){
         if(jobService.scheduleJob(id, username)){
+            return ResponseEntity.ok().build();
+        }else{
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @PostMapping("/cancelRide/{job_id}")
+    public ResponseEntity cancelRide(@PathVariable Long job_id){
+        if(1 == 1){
+            jobService.cancelRide(job_id);
             return ResponseEntity.ok().build();
         }else{
             return ResponseEntity.internalServerError().build();

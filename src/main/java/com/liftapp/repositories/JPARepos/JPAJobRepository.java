@@ -13,8 +13,13 @@ import java.util.List;
 public interface JPAJobRepository extends JpaRepository<LU_JOB, Long> {
     List<LU_JOB> findAll();
     List<LU_JOB> findAllByDriverIsNull();
+    List<LU_JOB> findAllByDriver(User driver);
 
     @Modifying
     @Query("update LU_JOB set driver = ?1 where id = ?2")
     void assignJob(User user, Long jobId);
+
+    @Modifying
+    @Query("update LU_JOB set driver = null where id = ?1")
+    void cancelJob(Long jobId);
 }
