@@ -1,6 +1,7 @@
 package com.liftapp.controllers;
 
 import com.liftapp.model.Bean.LU_JOB;
+import com.liftapp.model.command.JobCommand;
 import com.liftapp.services.interfaces.JobService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -64,5 +65,10 @@ public class JobController {
         }else{
             return ResponseEntity.internalServerError().build();
         }
+    }
+
+    @PostMapping("/{username}")
+    public ResponseEntity<LU_JOB> createJob(@PathVariable String username, @RequestBody JobCommand job){
+        return ResponseEntity.ok().body(jobService.createJob(username, job));
     }
 }

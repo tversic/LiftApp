@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,6 +26,18 @@ public class User {
 
     @Column(name = "password")
     private String password;
+
+    @Column(name = "date_of_birth")
+    private Date dateOfBirth;
+
+    @Column(name = "sex")
+    private Character sex;
+
+    @Column(name = "first_name")
+    private String first_name;
+
+    @Column
+    private String last_name;
 
     @ManyToMany
     @JoinTable(

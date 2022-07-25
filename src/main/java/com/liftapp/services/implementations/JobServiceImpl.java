@@ -2,12 +2,14 @@ package com.liftapp.services.implementations;
 
 import com.liftapp.model.Bean.LU_JOB;
 import com.liftapp.model.Bean.User;
+import com.liftapp.model.command.JobCommand;
 import com.liftapp.repositories.JPARepos.JPAJobRepository;
 import com.liftapp.repositories.JPARepos.JpaUserRepository;
 import com.liftapp.services.interfaces.JobService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +40,11 @@ public class JobServiceImpl implements JobService {
         return jobRepository.findAllByDriver(driver);
     }
 
+    @Override
+    public LU_JOB createJob(String username, JobCommand jobCommand) {
+        return jobRepository.save(mapJobCommandToLuJob(jobCommand, username));
+    }
+
     @Transactional
     @Override
     public boolean cancelRide(Long job_id) {
@@ -57,6 +64,24 @@ public class JobServiceImpl implements JobService {
             return false;
         }
         return true;
+    }
+
+    private LU_JOB mapJobCommandToLuJob(JobCommand jobCommand, String username){
+        LU_JOB job = new LU_JOB();
+        job.setTitle(jobCommand.getTitle());
+        job.setDescription(jobCommand.getDescription());
+        job.setPickupLocation(jobCommand.getPickup_location());
+        job.setTarget_location(jobCommand.getTarget_location());
+        job.setIssuedDate(jobCommand.getIssuedDate());
+        job.setPrice(Double.valueOf(jobCommand.getPrice()));
+        job.setDistance(null);
+        job.setDateNeeded(Date.valueOf(jobCommand.getDateNeeded()));
+        job.setPickupHours(jobCommand.getPickupHours());
+        job.setWidth(Integer.valueOf(jobCommand.getWidth()));
+        job.setLenght(Integer.valueOf(jobCommand.getLength()));
+        job.setWeight(Integer.valueOf(jobCommand.getWeight()));
+        job.setIssuer(userRepository.findByUsername(username));
+        return job;
     }
 
 }
